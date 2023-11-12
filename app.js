@@ -2,16 +2,21 @@ const express = require("express");
 const mongoose = require("mongoose");
 const logger = require("morgan");
 const cors = require("cors");
+const dotenv = require("dotenv")
 
-const DB_HOST =
-  "mongodb+srv://dmitr:2256161Leto@users.rro2nrv.mongodb.net/petProject?retryWrites=true&w=majority";
 const contactsRouter = require("./routes/api/contacts");
 const usersRouter = require("./routes/api/users");
+
+dotenv.config()
+const { DB_HOST } = process.env
 
 mongoose
   .connect(DB_HOST)
   .then(() => console.log("Database connect"))
-  .catch(e => console.log(e));
+  .catch((e) => {
+    console.log(e.message);
+    process.exit(1);
+  });
 
 const app = express();
 
