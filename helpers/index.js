@@ -1,5 +1,1 @@
-const createError = require("./createError")
-
-module.exports = {
-  createError
-}
+export { default as httpError } from "./httpError.js";

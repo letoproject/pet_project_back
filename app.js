@@ -1,22 +1,8 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const logger = require("morgan");
-const cors = require("cors");
-const dotenv = require("dotenv")
+import express from "express";
+import logger from "morgan";
+import cors from "cors";
 
-const contactsRouter = require("./routes/api/contacts");
-const usersRouter = require("./routes/api/users");
-
-dotenv.config()
-const { DB_HOST } = process.env
-
-mongoose
-  .connect(DB_HOST)
-  .then(() => console.log("Database connect"))
-  .catch((e) => {
-    console.log(e.message);
-    process.exit(1);
-  });
+import usersRouter from './routes/api/users.js';
 
 const app = express();
 
@@ -26,7 +12,6 @@ app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/contacts", contactsRouter);
 app.use("/api/users", usersRouter);
 
 app.use((req, res) => {
@@ -38,4 +23,4 @@ app.use((err, req, res, next) => {
   res.status(status).json({ message });
 });
 
-module.exports = app;
+export default app;

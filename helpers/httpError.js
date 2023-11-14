@@ -1,4 +1,4 @@
-const messages = {
+const messageList = {
   400: "Bad Request",
   401: "Unauthorized",
   403: "Forbidden",
@@ -6,10 +6,10 @@ const messages = {
   409: "Conflict",
 }
 
-const createError = (status, message = messages[status]) => {
+const httpError = (status, message = messageList[status]) => {
   const error = new Error(message)
   error.status = status
   return error
 }
 
-module.exports = createError
+export default httpError;
