@@ -6,7 +6,7 @@ import usersSchema from "../../schemas/users-schema.js";
 
 import { validateBody } from "../../decorators/index.js";
 
-import { isEmptyBody } from "../../middlewares/index.js";
+import { isEmptyBody, isValidId } from "../../middlewares/index.js";
 
 const usersRouter = express.Router();
 
@@ -18,5 +18,11 @@ usersRouter.post(
   validateBody(usersSchema.userAddSchema),
   usersController.add
 );
+
+usersRouter.get("/:id", isValidId, usersController.getById)
+
+usersRouter.put("/:id", isValidId, isEmptyBody, validateBody(usersSchema.userAddSchema), usersController.updateById)
+
+usersRouter.delete("/:id", isValidId, usersController.deleteById)
 
 export default usersRouter;
