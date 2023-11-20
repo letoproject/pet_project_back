@@ -1,6 +1,7 @@
 import { Schema, model } from "mongoose";
-import { handleSaveError, validateAtUpdate } from "./hooks.js";
 import Joi from 'joi';
+
+import { handleSaveError, validateAtUpdate } from "./hooks.js";
 
 const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
@@ -21,13 +22,15 @@ const userSchema = new Schema(
       minLength: 6,
       required: true,
     },
+    token: {
+      type: String,
+    }
   },
   { versionKey: false, timestamps: true }
 );
 
-userSchema.pre("findOneAndUpdate", validateAtUpdate);
-
 userSchema.post("save", handleSaveError);
+userSchema.pre("findOneAndUpdate", validateAtUpdate);
 userSchema.post("findOneAndUpdate", handleSaveError);
 
 export const userSignupSchema = Joi.object({
